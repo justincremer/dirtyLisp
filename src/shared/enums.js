@@ -1,8 +1,7 @@
 // TYPES
 const TYPES = {
-	INT: 'INT', // 123
-	FLOAT: 'FLOAT', // 1.23
-	CHAR: 'CHAR', // a b c
+	NUMBER: 'NUMBER', // 123
+	CHARACTER: 'CHARACTER', // a b c
 	UNDEFINED: 'UNDEFINED', // undefined
 	NULL: 'NULL', // null
 };
@@ -16,6 +15,7 @@ const SYMBOLS = {
 	EQUALS: 'EQUALS', // =
 	LPAREN: 'LPAREN', // (
 	RPAREN: 'RPAREN', // )
+
 	LBRACKET: 'LBRACKET', // {
 	RBRACKET: 'RBRACKET', // }
 	LSQBRACKET: 'LSQBRACKET', // [

@@ -1,5 +1,5 @@
-const Lexer = require('../utils/lexer');
-const { TYPES, SYMBOLS, SPECIAL } = require('../utils/enums');
+const Lexer = require('../src/utils/lexer');
+const { TYPES, SYMBOLS, SPECIAL } = require('../src/shared/enums');
 
 test('map empty string', () => {
 	const input = '';
@@ -19,7 +19,7 @@ test('map chars', () => {
 
 	const result = tokenList.map((t) => {
 		if (t.type !== SPECIAL.EOF) {
-			expect(t.type === TYPES.CHAR);
+			expect(t.type === TYPES.CHARACTER);
 			return t.value;
 		}
 	});
@@ -36,7 +36,7 @@ test('map ints', () => {
 
 	const result = tokenList.map((t) => {
 		if (t.type !== SPECIAL.EOF) {
-			expect(t.type === TYPES.INT);
+			expect(t.type === TYPES.NUMBER);
 			return t.value;
 		}
 	});

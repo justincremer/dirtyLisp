@@ -1,4 +1,4 @@
-const { TYPES, SYMBOLS, SPECIAL } = require('./enums');
+const { TYPES, SYMBOLS, SPECIAL } = require('../shared/enums');
 
 class Token {
 	/**
@@ -38,9 +38,9 @@ class Lexer {
 	// return token from a character
 	createToken = (c) =>
 		c.match(/[0-9]/) !== null
-			? new Token(TYPES.INT, c)
+			? new Token(TYPES.NUMBER, c)
 			: c.match(/[a-z]/i) !== null
-			? new Token(TYPES.CHAR, c)
+			? new Token(TYPES.CHARACTER, c)
 			: c === '+'
 			? new Token(SYMBOLS.PLUS, c)
 			: c === '-'
@@ -76,7 +76,7 @@ class Lexer {
 			: c === '\t'
 			? new Token(SPECIAL.TAB, c)
 			: c === ' '
-			? new Token(SPECIAL.SPACE, c)
+			? new Token(SPECIAL.WHITESPACE, c)
 			: new Token(TYPES.UNDEFINED, c);
 
 	// Steps through this.text and Tokenizes the current character,
@@ -96,11 +96,11 @@ class Lexer {
 	};
 
 	// Checks if tokens are mergable and does so if they are
-	// e.g. [{INT, 1}, {INT, 2}] == {INT, 12}
+	// e.g. [{NUMBER, 1}, {NUMBER, 2}] == {NUMBER, 12}
 	mergeHandler = (t1, t2) => {
-		const allowed = [TYPES.INT, TYPES.CHAR];
+		const allowed = [TYPES.NUMBER, TYPES.CHARACTER];
 
-		if (t1.type === TYPES.INT || t1.type === TYPES.CHAR) {
+		if (t1.type === TYPES.NUMBER || t1.type === TYPES.CHARACTER) {
 			return new Token(t1.type, t1.value + t2.value);
 		} else {
 			this.errorHandler(this.current);
@@ -152,13 +152,6 @@ class Lexer {
 
 	// 	for (const t of phrase) return t;
 	// };
-}
-
-class Parser {
-	constructor(text) {
-		this.lexer = new Lexer(text);
-		this.lexicalMap = this.lexer._repr();
-	}
 }
 
 module.exports = Lexer;
