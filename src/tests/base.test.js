@@ -45,7 +45,7 @@ test('map ints', () => {
 });
 
 test('map symbols', () => {
-	const input = '+-*/()';
+	const input = '+-*/=(){}[]\'"`~';
 	const l = new Lexer(input);
 	const tokenList = l.mapper();
 

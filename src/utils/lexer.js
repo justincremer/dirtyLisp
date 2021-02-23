@@ -49,10 +49,28 @@ class Lexer {
 			? new Token(SYMBOLS.MULTIPLY, c)
 			: c === '/'
 			? new Token(SYMBOLS.DIVIDE, c)
+			: c === '='
+			? new Token(SYMBOLS.EQUALS, c)
 			: c === '('
 			? new Token(SYMBOLS.LPAREN, c)
 			: c === ')'
 			? new Token(SYMBOLS.RPAREN, c)
+			: c === '{'
+			? new Token(SYMBOLS.LBRACKET, c)
+			: c === '}'
+			? new Token(SYMBOLS.RBRACKET, c)
+			: c === '['
+			? new Token(SYMBOLS.LSQBRACKET, c)
+			: c === ']'
+			? new Token(SYMBOLS.RSQBRACKET, c)
+			: c === "'"
+			? new Token(SYMBOLS.SQUOTE, c)
+			: c === '"'
+			? new Token(SYMBOLS.DQUOTE, c)
+			: c === '`'
+			? new Token(SYMBOLS.BACKTICK, c)
+			: c === '~'
+			? new Token(SYMBOLS.TILDE, c)
 			: c === '\n'
 			? new Token(SPECIAL.NEWLINE, c)
 			: c === '\t'
@@ -139,6 +157,7 @@ class Lexer {
 class Parser {
 	constructor(text) {
 		this.lexer = new Lexer(text);
+		this.lexicalMap = this.lexer._repr();
 	}
 }
 
