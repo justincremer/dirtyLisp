@@ -49,6 +49,10 @@ class Lexer {
 			? new Token(SYMBOLS.MULTIPLY, c)
 			: c === '/'
 			? new Token(SYMBOLS.DIVIDE, c)
+			: c === '('
+			? new Token(SYMBOLS.LPAREN, c)
+			: c === ')'
+			? new Token(SYMBOLS.RPAREN, c)
 			: c === '\n'
 			? new Token(SPECIAL.NEWLINE, c)
 			: c === '\t'
