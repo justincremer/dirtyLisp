@@ -1,19 +1,19 @@
 const Lexer = require('../utils/lexer');
 const { TYPES, SYMBOLS, SPECIAL } = require('../utils/enums');
 
-test('parse empty string', () => {
+test('map empty string', () => {
 	const input = '';
 	const l = new Lexer(input);
-	const tokenList = l.parse();
+	const tokenList = l.mapper();
 
 	expect(tokenList.length === 1);
 	expect(tokenList[0].type === SPECIAL.EOF);
 });
 
-test('parse chars', () => {
+test('map chars', () => {
 	const input = 'helloWorld';
 	const l = new Lexer(input);
-	const tokenList = l.parse();
+	const tokenList = l.mapper();
 
 	expect(tokenList[tokenList.length - 1].type === SPECIAL.EOF);
 
@@ -27,10 +27,10 @@ test('parse chars', () => {
 	expect(input === result);
 });
 
-test('parse ints', () => {
+test('map ints', () => {
 	const input = '1234567890';
 	const l = new Lexer(input);
-	const tokenList = l.parse();
+	const tokenList = l.mapper();
 
 	expect(tokenList[tokenList.length - 1].type === SPECIAL.EOF);
 
@@ -44,10 +44,10 @@ test('parse ints', () => {
 	expect(input === result);
 });
 
-test('parse symbols', () => {
+test('map symbols', () => {
 	const input = '+-*/()';
 	const l = new Lexer(input);
-	const tokenList = l.parse();
+	const tokenList = l.mapper();
 
 	expect(tokenList[tokenList.length - 1].type === SPECIAL.EOF);
 

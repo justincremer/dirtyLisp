@@ -30,9 +30,9 @@ class Lexer {
 		this.previous = null;
 	}
 
-	error = (t) => {
+	errorHandler = (t) => {
 		const message = `error parsing: ${t._repr()}`;
-		console.log(message);
+		console.error(message);
 	};
 
 	// return token from a character
@@ -70,7 +70,7 @@ class Lexer {
 
 		const token = this.createToken(this.text[this.pos]);
 		if (token.type === TYPES.UNDEFINED) {
-			this.error(token);
+			this.errorHandler(token);
 		} else {
 			this.pos++;
 			return token;
@@ -81,37 +81,38 @@ class Lexer {
 	// e.g. [{INT, 1}, {INT, 2}] == {INT, 12}
 	mergeHandler = (t1, t2) => {
 		const allowed = [TYPES.INT, TYPES.CHAR];
-		if (
-			this.current.type ===
-			this.previous.type(t1.type === TYPES.INT || t1.type === TYPES.CHAR)
-		) {
-			return new Token(t1.type, t1 + t2);
+
+		if (t1.type === TYPES.INT || t1.type === TYPES.CHAR) {
+			return new Token(t1.type, t1.value + t2.value);
 		} else {
-			this.error(this.current);
+			this.errorHandler(this.current);
 		}
 	};
 
-	parse = () => {
+	// Lexically maps and merges tokens, returning a 1D array of tokens
+	mapper = () => {
 		try {
+			// TODO: rewrite this mess
 			let result = [];
 
 			this.current = this.stepHandler();
 			result.push(this.current);
+			if (this.text.length === 0) return result;
 
 			do {
-				// this.previous = this.current;
-				// this.current = this.stepHandler();
-				// if (this.current.type === this.previous.type) {
-				// 	this.current = this.mergeHandler(
-				// 		this.current,
-				// 		this.previous
-				// 	);
-				// 	result.pop();
-				// 	result.push(this.current);
-				// } else {
+				this.previous = this.current;
 				this.current = this.stepHandler();
-				result.push(this.current);
-				// }
+
+				if (this.current.type === this.previous.type) {
+					this.current = this.mergeHandler(
+						this.previous,
+						this.current
+					);
+					result.pop();
+					result.push(this.current);
+				} else {
+					result.push(this.current);
+				}
 			} while (this.current.type !== SPECIAL.EOF);
 
 			return result;
@@ -119,6 +120,26 @@ class Lexer {
 			throw new Error(e);
 		}
 	};
+
+	// Object representation
+	_repr = () => this.mapper();
+
+	// String representation
+	_str = () => JSON.stringify(this._repr());
+
+	// Iterate over object representation
+	// Probably going to rip this out and implement a generator in the parser
+	// _itr = () => {
+	// 	const phrase = new Set(this._repr());
+
+	// 	for (const t of phrase) return t;
+	// };
+}
+
+class Parser {
+	constructor(text) {
+		this.lexer = new Lexer(text);
+	}
 }
 
 module.exports = Lexer;
