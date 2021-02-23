@@ -1,15 +1,28 @@
 const prompt = require('prompt-sync')();
-const Lexer = require('./lexer');
+const Lexer = require('./utils/lexer');
 
 while (1) {
-	const text = prompt('calc => ');
+	const text = prompt('DL => ');
 
 	if (text.toLowerCase === 'exit') {
 		break;
 	} else {
-		lexer = new Lexer(text);
+		const l = new Lexer(text);
 
-		result = lexer.calculate();
+		result = l.parse(text);
 		console.log(result);
 	}
 }
+
+// while (1) {
+// 	const text = prompt('calc => ');
+
+// 	if (text.toLowerCase === 'exit') {
+// 		break;
+// 	} else {
+// 		lexer = new Lexer(text);
+
+// 		result = lexer.additionTest();
+// 		console.log(result);
+// 	}
+// }
