@@ -1,5 +1,6 @@
 const help =
-	'help h    => list of availbe commands and options' +
-	'\nexit quit => exit the repl';
+	'help  => list of availbe commands and options' +
+	'\nclear => clear the terminal' +
+	'\nexit  => exit the repl';
 
 module.exports = help;

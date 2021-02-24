@@ -97,15 +97,7 @@ class Lexer {
 
 	// Checks if tokens are mergable and does so if they are
 	// e.g. [{NUMBER, 1}, {NUMBER, 2}] == {NUMBER, 12}
-	mergeHandler = (t1, t2) => {
-		const allowed = [TYPES.NUMBER, TYPES.CHARACTER];
-
-		if (t1.type === TYPES.NUMBER || t1.type === TYPES.CHARACTER) {
-			return new Token(t1.type, t1.value + t2.value);
-		} else {
-			this.errorHandler(this.current);
-		}
-	};
+	mergeHandler = (t1, t2) => new Token(t1.type, t1.value + t2.value);
 
 	// Lexically maps and merges tokens, returning a 1D array of tokens
 	mapper = () => {
@@ -145,7 +137,6 @@ class Lexer {
 	// String representation
 	_str = () => JSON.stringify(this._repr());
 
-	// Iterate over object representation
 	// Probably going to rip this out and implement a generator in the parser
 	// _itr = () => {
 	// 	const phrase = new Set(this._repr());

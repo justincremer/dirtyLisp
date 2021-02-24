@@ -3,33 +3,10 @@ const Parser = require('./utils/parser');
 const help = require('./shared/help');
 const { TYPES, SPECIAL } = require('./shared/enums');
 
-// This is sloppy, but it's temporary and only here as an example repl
+// This is sloppy, but it's only an example repl
 const streamHandler = (pt) => {
 	const lm = pt.lexMap;
 
-	// TODO: create command object (maybe 'dt' or 'dl')
-	// in order to avoid abitrary string conflicts. e.g. 'dt.exit'
-
-	// ONE
-	// if (pt.len === 2 && lm[0].type === TYPES.CHARACTER) {
-	// 	lm.map((t) => {
-	// 		switch (t.value) {
-	// 			case 'exit' || 'quit':
-	// 				console.log('safely exiting...');
-	// 				process.exit(0);
-	// 			case 'help' || 'h':
-	// 				console.log(`\n${help}\n`);
-	// 				break;
-	// 			default:
-	// 				console.log(`${t.value} is not a valid command`);
-	// 				break;
-	// 		}
-	// 	});
-	// } else {
-	// 	console.log(lm);
-	// }
-
-	// TWO
 	let commandFlag;
 	lm.map((t) => {
 		if (t.type !== SPECIAL.EOF) {
@@ -41,6 +18,11 @@ const streamHandler = (pt) => {
 			if (t.value === 'help') {
 				commandFlag = true;
 				console.log(`\n${help}\n`);
+			}
+
+			if (t.value === 'clear') {
+				commandFlag = true;
+				console.clear();
 			}
 		}
 	});
